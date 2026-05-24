@@ -3,128 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صندوق أدواتي المجانية</title>
+    <title>Eclipse Guidelines | دليلك الشامل</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
+        /* إعدادات الألوان والخطوط الأساسية (الوضع الليلي الفخم) */
+        :root {
+            --bg-color: #0d1117; /* أسود عميق */
+            --card-bg: #161b22; /* رمادي داكن للبطاقات */
+            --primary-glow: #00f2fe; /* أزرق نيون */
+            --secondary-glow: #4facfe;
+            --text-main: #c9d1d9;
+            --text-light: #ffffff;
         }
-        h1 { color: #1a73e8; }
-        p { color: #555; margin-bottom: 30px; }
-        .container {
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* تصميم الهيدر (الشريط العلوي الزجاجي) */
+        header {
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px); /* تأثير الزجاج */
+            border-bottom: 1px solid #30363d;
+            padding: 15px 40px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            max-width: 900px;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* الشعار (Logo) المبرمج بدون صور */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .logo-icon {
+            font-size: 28px;
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        /* قسم الترحيب (Hero Section) */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #8b949e;
+            max-width: 600px;
             margin: 0 auto;
         }
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 280px;
-            transition: transform 0.3s ease;
+
+        /* عناوين الأقسام */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 50px 0 30px;
+            color: var(--text-light);
+            position: relative;
         }
-        .card:hover { transform: translateY(-5px); }
-        h3 { margin-top: 0; color: #333; }
-        input, textarea, button {
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-glow), transparent);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* شبكة البطاقات (Grid) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* تصميم البطاقات (Cards) */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-glow);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p {
+            color: #8b949e;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* أزرار وحقول الإدخال للأدوات (سيتم تفعيلها لاحقاً) */
+        .tool-input {
             width: 100%;
             padding: 12px;
-            margin-top: 10px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: white;
             border-radius: 8px;
-            border: 1px solid #ccc;
             box-sizing: border-box;
+            margin-bottom: 15px;
             font-family: inherit;
         }
-        button {
-            background-color: #1a73e8;
+        .tool-input:focus {
+            outline: none;
+            border-color: var(--primary-glow);
+        }
+        .tool-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #0052d4, #4facfe, #00f2fe);
             color: white;
             border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 15px;
+            transition: opacity 0.3s;
         }
-        button:hover { background-color: #1557b0; }
-        .result {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #2e7d32;
-            min-height: 24px;
+        .tool-btn:hover {
+            opacity: 0.9;
         }
+
+        /* وسوم التصنيف (Tags) */
+        .tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary-glow);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
 
-    <h1>صندوق أدواتي 🚀</h1>
-    <p>أدوات سريعة، مجانية، وبدون تسجيل!</p>
+    <!-- الشريط العلوي والشعار -->
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon">🌘</span>
+            <span class="logo-text">Eclipse</span>
+        </div>
+    </header>
 
-    <div class="container">
+    <!-- قسم الترحيب -->
+    <div class="hero">
+        <h1>مرحباً بك في عالم <span style="color: var(--primary-glow);">السهولة</span></h1>
+        <p>دليلك الأسطوري لأدوات الذكاء الاصطناعي والمصادر السريعة التي تنجز أعمالك في ثوانٍ معدودة.</p>
+    </div>
+
+    <!-- القسم الأول: دليل الذكاء الاصطناعي -->
+    <h2 class="section-title">🤖 دليل الذكاء الاصطناعي</h2>
+    <div class="grid-container" id="ai-directory">
         
-        <!-- الأداة الأولى: حاسبة العمر -->
+        <!-- بطاقة موقع ChatGPT -->
         <div class="card">
-            <h3>حاسبة العمر 🎂</h3>
-            <label style="font-size: 14px; text-align: right; display: block;">أدخل تاريخ ميلادك:</label>
-            <input type="date" id="dob">
-            <button onclick="calculateAge()">احسب عمري</button>
-            <div id="ageResult" class="result"></div>
+            <span class="tag">محادثة</span>
+            <h3>💬 ChatGPT</h3>
+            <p>أشهر ذكاء اصطناعي للمحادثة، يساعدك في كتابة المقالات، البرمجة، والترجمة وحل الواجبات.</p>
+            <a href="https://chat.openai.com" target="_blank" style="text-decoration: none;">
+                <button class="tool-btn">زيارة الموقع</button>
+            </a>
         </div>
 
-        <!-- الأداة الثانية: عداد الكلمات -->
+        <!-- بطاقة موقع Midjourney -->
         <div class="card">
-            <h3>عداد النصوص 📝</h3>
-            <textarea id="textInput" rows="3" placeholder="اكتب أو انسخ النص هنا..." oninput="countText()"></textarea>
-            <div id="countResult" class="result" style="color: #1a73e8;">الكلمات: 0 | الحروف: 0</div>
+            <span class="tag">رسم وتصميم</span>
+            <h3>🎨 Midjourney</h3>
+            <p>أداة جبارة لتحويل النصوص إلى صور احترافية وتصاميم خيالية عالية الجودة.</p>
+            <a href="https://www.midjourney.com" target="_blank" style="text-decoration: none;">
+                <button class="tool-btn">زيارة الموقع</button>
+            </a>
         </div>
 
-        <!-- الأداة الثالثة: مولد كلمات المرور -->
+        <!-- بطاقة موقع 11Labs -->
         <div class="card">
-            <h3>كلمة مرور قوية 🔒</h3>
-            <button onclick="generatePassword()">توليد كلمة مرور جديدة</button>
-            <input type="text" id="passResult" readonly placeholder="ستظهر الكلمة هنا" style="text-align: center; font-weight: bold; letter-spacing: 2px;">
+            <span class="tag">صوتيات</span>
+            <h3>🎙️ ElevenLabs</h3>
+            <p>أفضل أداة لتحويل النص إلى صوت بشري واقعي جداً، يدعم اللغة العربية بطلاقة.</p>
+            <a href="https://elevenlabs.io" target="_blank" style="text-decoration: none;">
+                <button class="tool-btn">زيارة الموقع</button>
+            </a>
         </div>
 
     </div>
 
+    <!-- القسم الثاني: الأدوات السريعة والمفيدة -->
+    <h2 class="section-title">⚡ الأدوات السريعة</h2>
+    <div class="grid-container" id="quick-tools">
+        
+        <!-- مكان أداة محادثة الواتساب -->
+        <div class="card">
+            <span class="tag">تواصل</span>
+            <h3>📱 واتساب بدون حفظ</h3>
+            <p>أرسل رسالة واتساب لأي رقم فوراً دون الحاجة لحفظه في جهات الاتصال الخاصة بك.</p>
+            <input type="number" id="wa-number" class="tool-input" placeholder="رقم الهاتف مع رمز الدولة (مثال: 966...)">
+            <button class="tool-btn" onclick="openWhatsApp()">فتح المحادثة 🚀</button>
+        </div>
+
+        <!-- مكان أداة توليد الباركود -->
+        <div class="card">
+            <span class="tag">أدوات</span>
+            <h3>🔲 صانع الباركود (QR)</h3>
+            <p>حول أي رابط أو نص إلى رمز استجابة سريعة (QR Code) جاهز للمسح والتحميل.</p>
+            <input type="text" id="qr-text" class="tool-input" placeholder="ضع الرابط هنا...">
+            <button class="tool-btn" onclick="generateQR()">توليد الباركود ⬇️</button>
+            <div id="qr-result" style="text-align: center; margin-top: 15px;"></div>
+        </div>
+
+        <!-- مكان أداة مولد كلمات المرور (الاحتياطية) -->
+        <div class="card">
+            <span class="tag">حماية</span>
+            <h3>🔒 كلمة مرور حديدية</h3>
+            <p>قم بتوليد كلمة مرور عشوائية وقوية جداً يصعب اختراقها للحفاظ على حساباتك.</p>
+            <input type="text" id="pass-result" class="tool-input" style="text-align: center; font-size: 1.2rem; letter-spacing: 2px;" readonly placeholder="ستظهر هنا...">
+            <button class="tool-btn" onclick="generateStrongPassword()">توليد ونسخ 📋</button>
+        </div>
+
+    </div>
+
+    <!-- سيتم وضع أكواد التشغيل (JavaScript) في الخطوة القادمة هنا -->
     <script>
-        // برمجة حاسبة العمر
-        function calculateAge() {
-            let dob = document.getElementById('dob').value;
-            if(!dob) {
-                document.getElementById('ageResult').innerText = 'الرجاء اختيار تاريخ ميلاد!';
-                return;
-            }
-            let birthDate = new Date(dob);
-            let today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            let m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
-            document.getElementById('ageResult').innerText = `عمرك هو: ${age} سنة`;
-        }
-
-        // برمجة عداد الكلمات
-        function countText() {
-            let text = document.getElementById('textInput').value;
-            let words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-            let chars = text.length;
-            document.getElementById('countResult').innerText = `الكلمات: ${words} | الحروف: ${chars}`;
-        }
-
-        // برمجة مولد كلمات المرور
-        function generatePassword() {
-            let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-            let pass = "";
-            for(let i = 0; i < 12; i++) {
-                pass += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            document.getElementById('passResult').value = pass;
-        }
+        // سنضع دوال الواتساب والباركود والباسورد هنا في الرسالة القادمة
     </script>
 </body>
 </html>
