@@ -266,9 +266,62 @@
 
     </div>
 
-    <!-- سيتم وضع أكواد التشغيل (JavaScript) في الخطوة القادمة هنا -->
-    <script>
-        // سنضع دوال الواتساب والباركود والباسورد هنا في الرسالة القادمة
+  <script>
+        // 1. برمجة أداة محادثة الواتساب
+        function openWhatsApp() {
+            let phone = document.getElementById('wa-number').value;
+            if(phone.trim() === '') {
+                alert('الرجاء إدخال رقم الهاتف أولاً ⚠️');
+                return;
+            }
+            // إزالة أي مسافات أو رموز لضمان عمل الرابط
+            phone = phone.replace(/\D/g,'');
+            // فتح واتساب في نافذة جديدة
+            window.open('https://wa.me/' + phone, '_blank');
+        }
+
+        // 2. برمجة أداة صانع الباركود (QR)
+        function generateQR() {
+            let text = document.getElementById('qr-text').value;
+            if(text.trim() === '') {
+                alert('الرجاء إدخال رابط أو نص لتوليد الباركود ⚠️');
+                return;
+            }
+            let qrContainer = document.getElementById('qr-result');
+            // استخدام واجهة مجانية وسريعة لتوليد الباركود
+            let qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(text);
+            
+            // عرض الباركود داخل الموقع بتصميم أنيق
+            qrContainer.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="border-radius: 8px; border: 2px solid var(--primary-glow); padding: 5px; background: white; box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);">`;
+        }
+
+        // 3. برمجة أداة توليد ونسخ كلمة المرور
+        function generateStrongPassword() {
+            let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+            let pass = "";
+            for(let i = 0; i < 16; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            let passInput = document.getElementById('pass-result');
+            passInput.value = pass;
+            
+            // أمر النسخ التلقائي
+            passInput.select();
+            document.execCommand("copy");
+            
+            // تغيير نص الزر مؤقتاً لتأكيد النسخ للمستخدم
+            let btn = event.target;
+            let originalText = btn.innerText;
+            btn.innerText = "تم النسخ بنجاح! ✅";
+            btn.style.background = "#28a745"; // تحويل الزر للون الأخضر
+            
+            // إعادة الزر لشكله الطبيعي بعد ثانيتين
+            setTimeout(() => { 
+                btn.innerText = originalText; 
+                btn.style.background = "linear-gradient(45deg, #0052d4, #4facfe, #00f2fe)";
+            }, 2000);
+        }
     </script>
 </body>
 </html>
